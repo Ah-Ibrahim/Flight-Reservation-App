@@ -5,7 +5,7 @@ function SignUp() {
 	return(
 <section className="container">
   <form action="" className="form form--login">
-    <h1>Login Account</h1>
+    <h1>Create Account</h1>
     <div className="input-details">
       <div className="input-details__item">
 		<label htmlFor="SSN">SSN</label>
