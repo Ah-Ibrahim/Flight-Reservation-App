@@ -1,0 +1,107 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f2f4f8;
+  padding: 1rem;
+}
+
+.form {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  font-family: Arial, sans-serif;
+}
+
+.form h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.input-details__item {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-details__item label {
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  color: #333;
+}
+
+.input-details__item input,
+.input-details__item select {
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+.input-details__item input:focus,
+.input-details__item select:focus {
+  border-color: #6c63ff;
+  outline: none;
+}
+
+
+.birthday-options {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.birthday-options select {
+  flex: 1;
+}
+
+
+.form__button {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.form__button:hover {
+  background-color: #45a049;
+}
+
+
+.input-details__item .checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-details__item .checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+.change-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.change-text a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.change-text a:hover {
+  text-decoration: underline;
+}
