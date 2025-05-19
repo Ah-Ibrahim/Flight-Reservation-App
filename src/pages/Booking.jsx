@@ -7,6 +7,21 @@ export default function Booking({ onSearch }) {
 
 
 const [cities, setCities] = useState([]);
+const [flights, setFlights] = useState([]);
+
+  const [formData, setFormData] = useState({
+    from: "",
+    to: "",
+    startDate: "",
+  });
+    
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
 useEffect(() => {
     const fetchCities = async () => {
@@ -25,15 +40,59 @@ useEffect(() => {
     fetchCities();
   }, []);
 
+  const cleanCityName = (name) => {
+  return name.replace(/\s*\(.*?\)\s*/g, '').trim();  // Removes "(...)" with or without spaces
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const form = Object.fromEntries(data.entries());
-    onSearch(form);
-  };
 
-  return (
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+const from = cleanCityName(formData.from);
+const to = cleanCityName(formData.to);
+const startDate = new Date(formData.startDate).toISOString().split("T")[0];
+
+
+  if (!from || !to || !startDate) {
+    alert("Please complete all required fields.");
+    return;
+  }
+   const formattedDate = new Date(startDate).toISOString().split("T")[0]; // ensures YYYY-MM-DD
+  console.log("User Input:");
+  console.log("From:", from);
+  console.log("To:", to);
+  console.log("Date:", formattedDate);
+  try {
+    setFlights([]);
+    const response = await fetch('http://localhost/get_Flights.php', {
+      method: "POST",
+      headers: {
+         "Content-Type": "application/json",
+      },
+       body: JSON.stringify({ from, to, startDate: formattedDate}),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to send booking data");
+    }
+
+    const result = await response.json(); 
+    if (result.success) {
+              setFlights(result.flights);
+       } else {
+              alert(result.message || "No flights found.");
+       }
+
+  } catch (error) {
+    console.error("Submission error:", error);
+    alert("An error occurred while submitting the booking.");
+  }
+};
+
+
+
+return (
+  <>
     <form className="booking-form" onSubmit={handleSubmit}>
       <div className="field-group">
         <label htmlFor="from">From</label>
@@ -45,6 +104,8 @@ useEffect(() => {
             name="from"
             placeholder="Departure"
             list="from-airports"
+            value={formData.from}
+            onChange={handleChange}
           />
           <datalist id="from-airports">
             {cities.map((city, index) => (
@@ -66,6 +127,8 @@ useEffect(() => {
             name="to"
             placeholder="Destination"
             list="to-airports"
+             value={formData.to}
+            onChange={handleChange}
           />
           <datalist id="to-airports">
            {cities.map((city, index) => (
@@ -79,9 +142,7 @@ useEffect(() => {
         <label htmlFor="date">Date</label>
         <div className="input-wrapper">
           <FaCalendarAlt className="icon" />
-          <input type="date" id="startDate" name="startDate" />
-          <span className="separator">—</span>
-          <input type="date" id="endDate" name="endDate" />
+          <input type="date" id="startDate" name="startDate" value={formData.startDate} onChange={handleChange} />
         </div>
       </div>
 
@@ -90,5 +151,21 @@ useEffect(() => {
         LET'S FLY!
       </button>
     </form>
-  );
+    {flights.length > 0 && (
+      <div className="flight-results">
+        <h2>Available Flights</h2>
+        <ul>
+          {flights.map((flight, index) => (
+            <li key={index} className="flight-card">
+              <strong>{flight.Airline}</strong> - Flight {flight.FlightNumber}<br />
+              {flight.DepartureCity} ({new Date(flight.DepartureTime).toLocaleString()}) → {flight.ArrivalCity} ({new Date(flight.ArrivalTime).toLocaleString()})<br />
+              Gate: {flight.Gate}, Status: {flight.Status}, Capacity: {flight.Capacity}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </>
+);
+
 }

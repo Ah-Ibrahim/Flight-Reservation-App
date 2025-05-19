@@ -92,3 +92,15 @@
 .btn-submit:hover {
   background: #c4db00;
 }
+.flight-results {
+  margin-top: 2rem;
+  background: #f4f4f4;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.flight-card {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
