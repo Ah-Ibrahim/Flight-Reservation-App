@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import './Login.css';
 import React, { useState } from 'react';
 
@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ function Login() {
 
       if (result.success) {
         alert(result.success); 
+        navigate('/booking');
       } else if (result.error) {
         alert(result.error); 
       }
