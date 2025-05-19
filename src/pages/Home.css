@@ -1,0 +1,18 @@
+.home {
+  background-image: url('/plane.PNG');
+  background-size:cover ;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home__container {
+  color: white;
+  text-align: center;
+  --background-color: rgba(0, 0, 0, 0.5);
+  --padding: 40px;
+  border-radius: 15px;
+  font-family: sans-serif;
+}
