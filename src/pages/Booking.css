@@ -1,0 +1,106 @@
+/* BookingForm.css */
+.booking-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background: #e3f0f9;
+  padding: 20px;
+  border-radius: 20px;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 20px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+
+.field-group label {
+  font-weight: 600;
+  color: #4b2c77;
+  margin-bottom: 6px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.input-wrapper .icon {
+  color: #999;
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.swap-icon {
+  font-size: 1.5rem;
+  align-self: center;
+  color: #4b2c77;
+  margin-top: 30px;
+}
+
+.date-range {
+  flex: 2;
+}
+
+.date-range .input-wrapper {
+  gap: 10px;
+}
+
+.separator {
+  color: #999;
+}
+
+.btn-submit {
+  background: #d1e800;
+  color: #4b2c77;
+  font-weight: bold;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 1.1rem;
+  margin-top: 20px;
+}
+
+.btn-submit:hover {
+  background: #c4db00;
+}
+.flight-results {
+  margin-top: 2rem;
+  background: #f4f4f4;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.flight-card {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
