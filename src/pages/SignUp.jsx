@@ -11,7 +11,7 @@ function SignUp() {
     const day = formData.get('birth-day');
     data.dob = `${year}-${String(new Date(`${month} 1`).getMonth() + 1).padStart(2, '0')}-${day.padStart(2, '0')}`;
     try {
-      const response = await fetch('http://localhost/AirFlight/signup.php', {
+      const response = await fetch('http://localhost/sw_project/signup.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
