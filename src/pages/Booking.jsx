@@ -1,5 +1,6 @@
-// src/components/BookingForm.jsx
+// src/components/Booking.jsx
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // React Router hook
 import {
   FaPlaneDeparture,
   FaPlaneArrival,
@@ -17,6 +18,8 @@ export default function Booking({ onSearch }) {
     departureDate: "",
     arrivalDate: "",
   });
+
+  const navigate = useNavigate(); // hook to navigate programmatically
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -86,9 +89,10 @@ export default function Booking({ onSearch }) {
     }
   };
 
+  // Modified: when booking, navigate to /payment page with flight details
   const handleBook = (flight) => {
-    alert(`You booked flight ${flight.FlightNumber} with ${flight.Airline}!`);
-    // Here you can add your booking logic or navigation
+    // Navigate and pass flight info as state
+    navigate("/payment", { state: { flight } });
   };
 
   return (
