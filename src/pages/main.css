@@ -1,0 +1,175 @@
+/* Container & typography */
+.admin-flights-container {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 25px 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  color: #333;
+}
+
+h1, h2 {
+  text-align: center;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+/* Flight list section wrapper - allows horizontal scrolling */
+.flight-list-section {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* Error and status messages */
+.error {
+  color: #e74c3c;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.loading-text,
+.empty-text {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  margin: 20px 0;
+}
+
+/* Flights Table */
+.flights-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 35px;
+  font-size: 14.5px;
+}
+
+.flights-table th,
+.flights-table td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.flights-table th {
+  background-color: #f9fafb;
+  color: #555;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Hover effect on rows */
+.flight-row:hover {
+  background-color: #f1f7ff;
+  transition: background-color 0.3s ease;
+}
+
+/* Delete button */
+.btn-delete {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(231, 76, 60, 0.6);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+  box-shadow: 0 6px 14px rgba(192, 57, 43, 0.7);
+  transform: translateY(-2px);
+}
+
+.btn-delete:active {
+  background-color: #922b21;
+  box-shadow: 0 2px 5px rgba(146, 43, 33, 0.8);
+  transform: translateY(0);
+}
+
+/* Add flight form */
+.add-flight-section {
+  border-top: 2px solid #eee;
+  padding-top: 30px;
+}
+
+.add-flight-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 16px;
+  justify-content: center;
+}
+
+.add-flight-form input {
+  flex: 1 1 180px;
+  max-width: 200px;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1.8px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  outline-offset: 2px;
+}
+
+.add-flight-form input:focus {
+  border-color: #1890ff;
+  box-shadow: 0 0 8px rgba(24, 144, 255, 0.25);
+}
+
+/* Submit button */
+.btn-add {
+  flex: 1 1 100%;
+  max-width: 220px;
+  margin-top: 12px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(24, 144, 255, 0.45);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+.btn-add:hover {
+  background-color: #117acc;
+  box-shadow: 0 7px 20px rgba(17, 122, 204, 0.65);
+  transform: translateY(-2px);
+}
+
+.btn-add:active {
+  background-color: #0d5e9c;
+  box-shadow: 0 3px 8px rgba(13, 94, 156, 0.7);
+  transform: translateY(0);
+}
+
+/* Responsive tweaks */
+@media (max-width: 700px) {
+  .flights-table th,
+  .flights-table td {
+    font-size: 13px;
+    padding: 8px 6px;
+  }
+
+  .add-flight-form input {
+    max-width: 100%;
+    flex-basis: 100%;
+  }
+
+  .btn-add {
+    max-width: 100%;
+  }
+}

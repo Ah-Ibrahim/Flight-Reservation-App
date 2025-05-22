@@ -104,7 +104,7 @@
   padding: 0.5rem;
   border-bottom: 1px solid #ccc;
   position: relative;
-  padding-right: 100px; /* space for button */
+  padding-right: 180px; /* space for two buttons */
 }
 
 /* Book button styling */
@@ -127,4 +127,26 @@
 
 .btn-book:hover {
   background-color: #c4db00;
+}
+
+/* View button styling */
+.btn-view {
+  background-color: #3b82f6; /* Blue */
+  color: white;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  top: 50%;
+  right: 110px; /* place left of Book button */
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.btn-view:hover {
+  background-color: #2563eb; /* Darker blue on hover */
 }

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './payment.css';  // Make sure this path is correct
 
 const PaymentPage = () => {
+    const location = useLocation();
+    const { flight, ticketClass, seatPreference, customerId } = location.state || {};
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -86,46 +89,71 @@ const PaymentPage = () => {
     return true;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
 
-    setSubmitting(true);
-    try {
-      const response = await fetch('http://localhost/sw_project/payment.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          name: formData.name,
-          email: formData.email,
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          zip: formData.zip,
-          cardName: formData.cardName,
-          cardNum: formData.cardNum.replace(/\s/g, ''),
-          expMonth: formData.expMonth,
-          expYear: formData.expYear,
-          cvv: formData.cvv,
-        }),
-      });
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
 
-      const text = await response.text();
+  setSubmitting(true);
+console.log("Sending payment data:", {
+  name: formData.name,
+  email: formData.email,
+  address: formData.address,
+  city: formData.city,
+  state: formData.state,
+  zip: formData.zip,
+  cardName: formData.cardName,
+  cardNum: formData.cardNum.replace(/\s/g, ''),
+  expMonth: formData.expMonth,
+  expYear: formData.expYear,
+  cvv: formData.cvv,
+  customerId: customerId || '',
+  flightId: flight?.id || '',
+  ticketClass: ticketClass || '',
+  seatPreference: seatPreference || '',
+});
 
-      if (!response.ok) {
-        alert(`Payment failed: ${text}`);
-      } else {
-        alert(text);
-      }
-    } catch (error) {
-      console.error('Fetch error:', error);
-      alert('Payment failed due to a network or server error. Please try again.');
-    } finally {
-      setSubmitting(false);
+  try {
+    const response = await fetch('http://localhost/sw_project/payment.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        name: formData.name,
+        email: formData.email,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        zip: formData.zip,
+        cardName: formData.cardName,
+        cardNum: formData.cardNum.replace(/\s/g, ''),
+        expMonth: formData.expMonth,
+        expYear: formData.expYear,
+        cvv: formData.cvv,
+
+        customerId: customerId || '',
+        flightId: flight?.id || '',
+        ticketClass: ticketClass || '',
+        seatPreference: seatPreference || '',
+      }),
+    });
+
+    const text = await response.text();
+
+    if (!response.ok) {
+      alert(`Payment failed: ${text}`);
+    } else {
+      alert(text);
     }
-  };
+  } catch (error) {
+    console.error('Fetch error:', error);
+    alert('Payment failed due to a network or server error. Please try again.');
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 10 }, (_, i) => currentYear + i);

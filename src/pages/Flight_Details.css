@@ -1,0 +1,32 @@
+.flight-details-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.flight-details-container p {
+  margin: 0.5rem 0;
+}
+
+.flight-details-container select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.btn-confirm {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

@@ -1,12 +1,9 @@
 // src/components/Booking.jsx
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // React Router hook
-import {
-  FaPlaneDeparture,
-  FaPlaneArrival,
-  FaCalendarAlt,
-} from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FaPlaneDeparture, FaPlaneArrival, FaCalendarAlt } from "react-icons/fa";
 import "./Booking.css";
+import './FlightDetails.css';
 
 export default function Booking({ onSearch }) {
   const [cities, setCities] = useState([]);
@@ -19,7 +16,7 @@ export default function Booking({ onSearch }) {
     arrivalDate: "",
   });
 
-  const navigate = useNavigate(); // hook to navigate programmatically
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,9 +52,7 @@ export default function Booking({ onSearch }) {
 
     const from = cleanCityName(formData.from);
     const to = cleanCityName(formData.to);
-    const departureDate = new Date(formData.departureDate)
-      .toISOString()
-      .split("T")[0];
+    const departureDate = new Date(formData.departureDate).toISOString().split("T")[0];
     const arrivalDate = new Date(formData.arrivalDate).toISOString().split("T")[0];
 
     if (!from || !to || !departureDate || !arrivalDate) {
@@ -89,10 +84,12 @@ export default function Booking({ onSearch }) {
     }
   };
 
-  // Modified: when booking, navigate to /payment page with flight details
   const handleBook = (flight) => {
-    // Navigate and pass flight info as state
     navigate("/payment", { state: { flight } });
+  };
+
+  const handleView = (flight) => {
+    navigate("/flight-details", { state: { flight } });
   };
 
   return (
@@ -190,12 +187,14 @@ export default function Booking({ onSearch }) {
                 <br />
                 Gate: {flight.Gate}, Status: {flight.Status}, Capacity: {flight.Capacity}
                 <button
-                  className="btn-book"
-                  onClick={() => handleBook(flight)}
+                  className="btn-view"
+                  onClick={() => handleView(flight)}
                   type="button"
+                  style={{ marginRight: "8px" }}
                 >
-                  Book
+                  View
                 </button>
+               
               </li>
             ))}
           </ul>
@@ -203,4 +202,4 @@ export default function Booking({ onSearch }) {
       )}
     </>
   );
-}
+}  
