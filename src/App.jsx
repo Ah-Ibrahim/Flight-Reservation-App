@@ -21,7 +21,7 @@ function App() {
 				<Route path="/flight-details" element={<FlightDetails />} /> {/* New route */}
 				<Route path="/admin/login" element={<AdminLogin />} /> {/* ✅ Admin Login */}
 				<Route path="/admin/signup" element={<AdminSignup />} /> {/* ✅ Admin Signup */}
-				<Route path="/admin/AdminMain" element={<AdminMain />} /> {/* ✅ Admin Signup */}
+				<Route path="/admin/AdminMain" element={<AdminMain />} /> {/* ✅ Admin main */}
 			</Routes>
 		</>
 	);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './main.css'; // Make sure your CSS file has the appropriate styles
+import './main.css'; // Ensure your CSS has styles for .error, .loading-text, .flights-table, etc.
 
 function AdminFlights() {
   const [flights, setFlights] = useState([]);
@@ -24,12 +24,16 @@ function AdminFlights() {
   const fetchFlights = async () => {
     setLoading(true);
     setError('');
+    console.log('Fetching flights...');
     try {
       const res = await fetch('http://localhost/sw_project/get_flightt.php');
+      console.log('Fetch response:', res);
       if (!res.ok) throw new Error('Failed to fetch flights');
       const data = await res.json();
+      console.log('Flights data:', data);
       setFlights(data);
     } catch (err) {
+      console.error('Fetch error:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -44,9 +48,12 @@ function AdminFlights() {
   const handleAddFlight = async (e) => {
     e.preventDefault();
     setError('');
+    console.log('Submitting flight:', form);
 
     if (!form.FlightNumber || !form.Airline || !form.DepartureCity || !form.ArrivalCity) {
-      setError('Please fill required fields: FlightNumber, Airline, DepartureCity, ArrivalCity');
+      const msg = 'Please fill required fields: FlightNumber, Airline, DepartureCity, ArrivalCity';
+      console.warn(msg);
+      setError(msg);
       return;
     }
 
@@ -57,6 +64,7 @@ function AdminFlights() {
         body: JSON.stringify(form),
       });
       const data = await res.json();
+      console.log('Add flight response:', data);
 
       if (res.ok) {
         alert(data.message || 'Flight added successfully!');
@@ -76,6 +84,7 @@ function AdminFlights() {
         setError(data.error || 'Failed to add flight');
       }
     } catch (err) {
+      console.error('Add flight error:', err);
       setError('Network error: ' + err.message);
     }
   };
@@ -83,13 +92,15 @@ function AdminFlights() {
   const handleDeleteFlight = async (FlightID) => {
     if (!window.confirm('Are you sure you want to delete this flight?')) return;
 
+    console.log('Deleting flight ID:', FlightID);
     try {
       const res = await fetch('http://localhost/sw_project/delete_flight.php', {
-        method: 'DELETE',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ FlightID }),
       });
       const data = await res.json();
+      console.log('Delete flight response:', data);
 
       if (res.ok) {
         alert(data.message || 'Flight deleted successfully!');
@@ -99,6 +110,7 @@ function AdminFlights() {
         setError(data.error || 'Failed to delete flight');
       }
     } catch (err) {
+      console.error('Delete flight error:', err);
       setError('Network error: ' + err.message);
     }
   };
@@ -165,80 +177,15 @@ function AdminFlights() {
       <section className="add-flight-section">
         <h2>Add New Flight</h2>
         <form onSubmit={handleAddFlight} className="add-flight-form" noValidate>
-          <input
-            type="text"
-            name="FlightNumber"
-            placeholder="Flight Number *"
-            value={form.FlightNumber}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-          />
-          <input
-            type="text"
-            name="Airline"
-            placeholder="Airline *"
-            value={form.Airline}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-          />
-          <input
-            type="text"
-            name="DepartureCity"
-            placeholder="Departure City *"
-            value={form.DepartureCity}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-          />
-          <input
-            type="text"
-            name="ArrivalCity"
-            placeholder="Arrival City *"
-            value={form.ArrivalCity}
-            onChange={handleInputChange}
-            required
-            autoComplete="off"
-          />
-          <input
-            type="datetime-local"
-            name="DepartureTime"
-            placeholder="Departure Time"
-            value={form.DepartureTime}
-            onChange={handleInputChange}
-          />
-          <input
-            type="datetime-local"
-            name="ArrivalTime"
-            placeholder="Arrival Time"
-            value={form.ArrivalTime}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="Gate"
-            placeholder="Gate"
-            value={form.Gate}
-            onChange={handleInputChange}
-            autoComplete="off"
-          />
-          <input
-            type="text"
-            name="Status"
-            placeholder="Status"
-            value={form.Status}
-            onChange={handleInputChange}
-            autoComplete="off"
-          />
-          <input
-            type="number"
-            name="Capacity"
-            placeholder="Capacity"
-            value={form.Capacity}
-            onChange={handleInputChange}
-            min="0"
-          />
+          <input type="text" name="FlightNumber" placeholder="Flight Number *" value={form.FlightNumber} onChange={handleInputChange} required />
+          <input type="text" name="Airline" placeholder="Airline *" value={form.Airline} onChange={handleInputChange} required />
+          <input type="text" name="DepartureCity" placeholder="Departure City *" value={form.DepartureCity} onChange={handleInputChange} required />
+          <input type="text" name="ArrivalCity" placeholder="Arrival City *" value={form.ArrivalCity} onChange={handleInputChange} required />
+          <input type="datetime-local" name="DepartureTime" value={form.DepartureTime} onChange={handleInputChange} />
+          <input type="datetime-local" name="ArrivalTime" value={form.ArrivalTime} onChange={handleInputChange} />
+          <input type="text" name="Gate" placeholder="Gate" value={form.Gate} onChange={handleInputChange} />
+          <input type="text" name="Status" placeholder="Status" value={form.Status} onChange={handleInputChange} />
+          <input type="number" name="Capacity" placeholder="Capacity" value={form.Capacity} onChange={handleInputChange} min="0" />
           <button type="submit" className="btn-add" disabled={loading}>Add Flight</button>
         </form>
       </section>
