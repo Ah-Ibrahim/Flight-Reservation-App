@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Online Payment-Page</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            background-image: url('AirBOOKING%20(1).png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form action="payment.php" method="POST" id="paymentForm">
+            <div class="row">
+                <div class="col">
+                    <h3 class="title">Billing Address</h3>
+
+                    <div class="inputBox">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+                    </div>
+
+                    <div class="inputBox">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email" placeholder="Enter email address" required />
+                    </div>
+
+                    <div class="inputBox">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" name="address" placeholder="Enter address" required />
+                    </div>
+
+                    <div class="inputBox">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city" placeholder="Enter city" required />
+                    </div>
+
+                    <div class="flex">
+                        <div class="inputBox">
+                            <label for="state">State:</label>
+                            <input type="text" id="state" name="state" placeholder="Enter state" required />
+                        </div>
+
+                        <div class="inputBox">
+                            <label for="zip">Zip Code:</label>
+                            <input type="number" id="zip" name="zip" placeholder="123 456" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <h3 class="title">Payment</h3>
+
+                    <div class="inputBox">
+                        <label>Card Accepted:</label>
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240715140014/Online-Payment-Project.webp" alt="credit/debit card image" />
+                    </div>
+
+                    <div class="inputBox">
+                        <label for="cardName">Name On Card:</label>
+                        <input type="text" id="cardName" name="cardName" placeholder="Enter card name" required />
+                    </div>
+
+                    <div class="inputBox">
+                        <label for="cardNum">Credit Card Number:</label>
+                        <input type="text" id="cardNum" name="cardNum" placeholder="1111-2222-3333-4444" maxlength="19" required />
+                    </div>
+
+                    <div class="inputBox">
+                        <label for="expMonth">Exp Month:</label>
+                        <select name="expMonth" id="expMonth" required>
+                            <option value="">Choose month</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+
+                    <div class="flex">
+                        <div class="inputBox">
+                            <label for="expYear">Exp Year:</label>
+                            <select name="expYear" id="expYear" required>
+                                <option value="">Choose Year</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                            </select>
+                        </div>
+
+                        <div class="inputBox">
+                            <label for="cvv">CVV</label>
+                            <input type="number" id="cvv" name="cvv" placeholder="123" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Proceed to Checkout" class="submit_btn" />
+        </form>
+    </div>
+
+    <!-- JavaScript -->
+    <script type="text/javascript">
+        let cardNumInput = document.querySelector('#cardNum');
+        let paymentForm = document.querySelector('#paymentForm');
+
+        // Format the card number input
+        cardNumInput.addEventListener('keyup', () => {
+            let cNumber = cardNumInput.value;
+            cNumber = cNumber.replace(/\s/g, "");
+
+            if (Number(cNumber)) {
+                cNumber = cNumber.match(/.{1,4}/g);
+                cNumber = cNumber.join(" ");
+                cardNumInput.value = cNumber;
+            }
+        });
+
+        // Form submission validation
+        paymentForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get values from the form
+            let name = document.querySelector('#name').value;
+            let email = document.querySelector('#email').value;
+            let address = document.querySelector('#address').value;
+            let city = document.querySelector('#city').value;
+            let state = document.querySelector('#state').value;
+            let zip = document.querySelector('#zip').value;
+            let cardName = document.querySelector('#cardName').value;
+            let cardNum = document.querySelector('#cardNum').value.replace(/\s/g, ''); // Remove spaces for validation
+            let expMonth = document.querySelector('#expMonth').value;
+            let expYear = document.querySelector('#expYear').value;
+            let cvv = document.querySelector('#cvv').value;
+
+            // Validate CVV: Check if it's 3 digits
+            if (cvv.length !== 3) {
+                alert('CVV must be 3 digits!');
+                return;
+            }
+
+            // Validate credit card number: Check if it's 16 digits
+            if (cardNum.length !== 16 || isNaN(cardNum)) {
+                alert('Credit Card Number must be 16 digits!');
+                return;
+            }
+
+            // Validate Expiry Date: Check if expiry date is after the current date
+            let currentDate = new Date();
+            let expiryDate = new Date(expYear, expMonth - 1); // JS months are 0-based
+            if (expiryDate < currentDate) {
+                alert('The expiry date must be after today!');
+                return;
+            }
+
+            // Check if any field is empty
+            if (!name || !email || !address || !city || !state || !zip || !cardName || !cardNum || !expMonth || !expYear || !cvv) {
+                alert('Please fill in all the fields!');
+                return;
+            }
+
+            // If all validations pass, submit the form normally
+            paymentForm.submit();
+        });
+    </script>
+</body>
+
+</html>

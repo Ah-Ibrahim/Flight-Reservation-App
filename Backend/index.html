@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking System</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url('AirBOOKING%20(1).png');
+            background-size: 80%;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .button-container button {
+            padding: 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            width: 48%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-section {
+            width: 100%;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        label {
+            font-weight: 600;
+            color: #555;
+            margin-top: 10px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        input[type="date"] {
+            width: 100%;
+            padding: 15px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            display: none;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .toggle-link {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            cursor: pointer;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .toggle-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Flight Booking System</h1>
+
+        <!-- Button to toggle between login and signup -->
+        <div class="button-container">
+            <button id="login-btn">Login</button>
+            <button id="signup-btn">Sign Up</button>
+        </div>
+
+        <!-- Login Form Section (hidden initially) -->
+        <div class="form-section" id="login-form">
+            <form id="login-form-fields" method="POST">
+                <h3>Login</h3>
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" name="email" required>
+
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" name="password" required>
+
+                <div class="error-message" id="login-error"></div>
+
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+        </div>
+
+        <!-- Sign Up Form Section (hidden initially) -->
+        <div class="form-section" id="signup-form">
+            <h3>Sign Up</h3>
+            <form id="signup-form-fields" method="POST">
+                <label for="ssn">SSN:</label>
+                <input type="text" id="ssn" name="ssn" required><br><br>
+
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" name="firstname" required><br><br>
+
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" required><br><br>
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required><br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required><br><br>
+
+                <label for="phonenumber">Phone Number:</label>
+                <input type="text" id="phonenumber" name="phonenumber" required><br><br>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br><br>
+
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+
+                <div class="error-message" id="signup-error"></div>
+
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Toggle Link to switch between forms -->
+        <a href="#" class="toggle-link" id="toggle-link"></a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const loginBtn = document.getElementById("login-btn");
+            const signupBtn = document.getElementById("signup-btn");
+            const loginForm = document.getElementById("login-form");
+            const signupForm = document.getElementById("signup-form");
+            const toggleLink = document.getElementById("toggle-link");
+
+            // Initially, only buttons are shown (no forms)
+            loginForm.classList.remove("active");
+            signupForm.classList.remove("active");
+
+            // Show the Login form when Login button is pressed
+            loginBtn.addEventListener("click", () => {
+                loginForm.classList.add("active");
+                signupForm.classList.remove("active");
+                toggleLink.textContent = "Don't have an account? Sign Up";
+            });
+
+            // Show the Sign Up form when Sign Up button is pressed
+            signupBtn.addEventListener("click", () => {
+                signupForm.classList.add("active");
+                loginForm.classList.remove("active");
+                toggleLink.textContent = "Already have an account? Login";
+            });
+
+            // Toggle between Login and Sign Up forms using the toggle link
+            toggleLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (loginForm.classList.contains("active")) {
+                    signupForm.classList.add("active");
+                    loginForm.classList.remove("active");
+                    toggleLink.textContent = "Already have an account? Login";
+                } else {
+                    signupForm.classList.remove("active");
+                    loginForm.classList.add("active");
+                    toggleLink.textContent = "Don't have an account? Sign Up";
+                }
+            });
+
+            // Handle login form submission
+            document.getElementById('login-form-fields').addEventListener('submit', function(event) {
+                event.preventDefault();  // Prevent form from submitting normally
+
+                // Clear previous error message
+                document.getElementById('login-error').style.display = 'none';
+
+                // Get form data
+                var formData = new FormData(this);
+
+                // Send the form data to the server
+                fetch('login.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle the response from the PHP script
+                        if (data.success) {
+                            alert(data.success); // Show success message
+                            //window.location.href = "dashboard.php"; // Redirect to the dashboard or home page
+                        } else if (data.error) {
+                            // Show error message (Invalid password, No user found, etc.)
+                            var errorMessage = document.getElementById('login-error');
+                            errorMessage.innerText = data.error;
+                            errorMessage.style.display = 'block';  // Display the error message
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+
+            // Handle signup form submission
+            document.getElementById('signup-form-fields').addEventListener('submit', function(event) {
+                event.preventDefault();  // Prevent form from submitting normally
+
+                // Clear previous error message
+                document.getElementById('signup-error').style.display = 'none';
+
+                // Get form data
+                var formData = new FormData(this);
+
+                // Send the form data to the server
+                fetch('signup.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        // Handle the response from the PHP script
+                        if (data.includes("success")) {
+                            alert("Sign Up successful! Please log in.");
+                            loginForm.classList.add("active");
+                            signupForm.classList.remove("active");
+                            toggleLink.textContent = "Don't have an account? Sign Up";
+                        } else {
+                            var errorMessage = document.getElementById('signup-error');
+                            errorMessage.innerText = data;
+                            errorMessage.style.display = 'block';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>
